@@ -45,14 +45,14 @@ func Open(name string, style canvas.FontStyle, sysfonts *fontpkg.SystemFonts) ([
 		}
 		for _, entry := range entries {
 			if s := entry.Name(); !entry.IsDir() && extRE.MatchString(s) {
-				v = append(v, NewFromPath(filepath.Join(name, s)))
+				v = append(v, New(nil, filepath.Join(name, s)))
 			}
 		}
 		sort.Slice(v, func(i, j int) bool {
 			return strings.ToLower(v[i].Family) < strings.ToLower(v[j].Family)
 		})
 	case err == nil:
-		v = append(v, NewFromPath(name))
+		v = append(v, New(nil, name))
 	default:
 		if font := Match(name, style, sysfonts); font != nil {
 			v = append(v, font)
@@ -64,8 +64,18 @@ func Open(name string, style canvas.FontStyle, sysfonts *fontpkg.SystemFonts) ([
 	return v, nil
 }
 
+// Match creates a font image for a matching font name from the system fonts.
+func Match(name string, style canvas.FontStyle, sysfonts *fontpkg.SystemFonts) *Font {
+	md, ok := sysfonts.Match(name, fontpkg.ParseStyle(style.String()))
+	if !ok {
+		return nil
+	}
+	return NewFont(md)
+}
+
 // Font is a font image.
 type Font struct {
+	Buf        []byte
 	Path       string
 	Family     string
 	Name       string
@@ -74,8 +84,8 @@ type Font struct {
 	once       sync.Once
 }
 
-// New creates a new font image.
-func New(md fontpkg.FontMetadata) *Font {
+// NewFont creates a new font image.
+func NewFont(md fontpkg.FontMetadata) *Font {
 	family := md.Family
 	if family == "" {
 		family = titleCase(strings.TrimSuffix(filepath.Base(md.Filename), filepath.Ext(md.Filename)))
@@ -87,18 +97,10 @@ func New(md fontpkg.FontMetadata) *Font {
 	}
 }
 
-// Match creates a font image for a matching font name from the system fonts.
-func Match(name string, style canvas.FontStyle, sysfonts *fontpkg.SystemFonts) *Font {
-	md, ok := sysfonts.Match(name, fontpkg.ParseStyle(style.String()))
-	if !ok {
-		return nil
-	}
-	return New(md)
-}
-
-// NewFromPath creates a font image from a path.
-func NewFromPath(path string) *Font {
+// New creates a font image from a path.
+func New(buf []byte, path string) *Font {
 	return &Font{
+		Buf:    buf,
 		Path:   path,
 		Family: titleCase(strings.TrimSuffix(filepath.Base(path), filepath.Ext(path))),
 	}
@@ -132,8 +134,17 @@ func (font *Font) WriteYAML(w io.Writer) {
 // Load loads the font style.
 func (font *Font) Load(style canvas.FontStyle) (*canvas.FontFamily, error) {
 	ff := canvas.NewFontFamily(font.Family)
-	if err := ff.LoadFontFile(font.Path, style); err != nil {
-		return nil, err
+	switch {
+	case font.Buf != nil:
+		if err := ff.LoadFont(font.Buf, 0, style); err != nil {
+			return nil, err
+		}
+	case font.Path != "":
+		if err := ff.LoadFontFile(font.Path, style); err != nil {
+			return nil, err
+		}
+	default:
+		return nil, fmt.Errorf("font.Buf and font.Path not set")
 	}
 	font.once.Do(func() {
 		face := ff.Face(16)

@@ -33,7 +33,7 @@ func TestRasterize(t *testing.T) {
 	)
 	for _, test := range testFonts(t) {
 		t.Run(test.name, func(t *testing.T) {
-			f := NewFromPath(test.path)
+			f := New(nil, test.path)
 			img, err := f.Rasterize(
 				nil,
 				size,
