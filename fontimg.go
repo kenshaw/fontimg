@@ -290,7 +290,7 @@ func init() {
 
 // NewTemplate creates a text template.
 func NewTemplate(text string) (*template.Template, error) {
-	return template.New("").Funcs(map[string]interface{}{
+	return template.New("").Funcs(map[string]any{
 		"size": func(size int) string {
 			return fmt.Sprintf("\x00%d\x00", size)
 		},
