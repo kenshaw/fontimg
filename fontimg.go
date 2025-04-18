@@ -81,6 +81,7 @@ type Font struct {
 	Name       string
 	Style      string
 	SampleText string
+	Version    string
 	once       sync.Once
 }
 
@@ -157,6 +158,9 @@ func (font *Font) Load(style canvas.FontStyle) (*canvas.FontFamily, error) {
 		if v := face.Font.SFNT.Name.Get(fontpkg.NameSampleText); 0 < len(v) {
 			font.SampleText = v[0].String()
 		}
+		if v := face.Font.SFNT.Name.Get(fontpkg.NameVersion); 0 < len(v) {
+			font.Version = strings.TrimPrefix(v[0].String(), "Version ")
+		}
 	})
 	return ff, nil
 }
@@ -184,6 +188,7 @@ func (font *Font) Rasterize(
 		Name:       font.BestName(),
 		Style:      font.Style,
 		SampleText: font.SampleText,
+		Version:    font.Version,
 	}); err != nil {
 		return nil, err
 	}
@@ -220,6 +225,7 @@ type TemplateData struct {
 	Name       string
 	Style      string
 	SampleText string
+	Version    string
 }
 
 // breakLines breaks the text up by lines, returning the lines and the font
@@ -227,7 +233,7 @@ type TemplateData struct {
 func breakLines(buf []byte, size int) ([]string, []int) {
 	var lines []string
 	var sizes []int
-	for _, line := range bytes.Split(buf, []byte{'\n'}) {
+	for line := range bytes.SplitSeq(buf, []byte{'\n'}) {
 		sz := size
 		if m := sizeRE.FindSubmatch(line); m != nil {
 			if s, err := strconv.Atoi(string(m[1])); err == nil {

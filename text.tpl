@@ -1,4 +1,4 @@
-{{ size (inc .Size 2) }}{{ .Name }}, {{ .Style }}
+{{ size (inc .Size 2) }}{{ .Name }}, {{ .Style }}{{ if .Version }}, v{{ .Version }}{{ end }}
 {{ size .Size }}{{ if .SampleText }}{{ .SampleText }}{{ else }}abcdefghijklmnopqrstuvwxyz
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 0123456789.<:,>;('~"){!@#$%^&*?`=}[_\-/+]
