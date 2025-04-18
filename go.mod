@@ -1,13 +1,16 @@
 module github.com/kenshaw/fontimg
 
-go 1.23.5
+go 1.24.1
+
+toolchain go1.24.2
 
 require (
-	github.com/tdewolff/canvas v0.0.0-20250209140343-015076d8ff76
-	github.com/tdewolff/font v0.0.0-20250207110603-e57683ffdb59
+	github.com/tdewolff/canvas v0.0.0-20250409071931-b2b4fe5c4e6e
+	github.com/tdewolff/font v0.0.0-20250314092958-e0eef3f68b08
 )
 
 require (
+	codeberg.org/go-pdf/fpdf v0.11.0 // indirect
 	github.com/BurntSushi/freetype-go v0.0.0-20160129220410-b763ddbfe298 // indirect
 	github.com/BurntSushi/graphics-go v0.0.0-20160129215708-b43f31a4a966 // indirect
 	github.com/BurntSushi/xgb v0.0.0-20210121224620-deaf085860bc // indirect
@@ -17,14 +20,16 @@ require (
 	github.com/benoitkugler/textlayout v0.3.1 // indirect
 	github.com/benoitkugler/textprocessing v0.0.3 // indirect
 	github.com/go-fonts/latin-modern v0.3.3 // indirect
-	github.com/go-text/typesetting v0.2.1 // indirect
+	github.com/go-text/typesetting v0.3.0 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef // indirect
 	github.com/srwiley/scanx v0.0.0-20190309010443-e94503791388 // indirect
-	github.com/tdewolff/minify/v2 v2.21.3 // indirect
-	github.com/tdewolff/parse/v2 v2.7.21-0.20250207110456-867b66db0fb0 // indirect
-	golang.org/x/image v0.24.0 // indirect
-	golang.org/x/net v0.35.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
-	star-tex.org/x/tex v0.5.0 // indirect
+	github.com/tdewolff/minify/v2 v2.23.1 // indirect
+	github.com/tdewolff/parse/v2 v2.7.23 // indirect
+	golang.org/x/image v0.26.0 // indirect
+	golang.org/x/net v0.39.0 // indirect
+	golang.org/x/text v0.24.0 // indirect
+	modernc.org/knuth v0.5.4 // indirect
+	modernc.org/token v1.1.0 // indirect
+	star-tex.org/x/tex v0.7.1 // indirect
 )
