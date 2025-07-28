@@ -201,7 +201,7 @@ func (font *Font) Rasterize(
 	lines, sizes := breakLines(buf.Bytes(), fontSize)
 	for i, y := 0, float64(0); i < len(lines); i++ {
 		face := ff.Face(float64(sizes[i]), fg, style, variant)
-		txt := canvas.NewTextBox(face, strings.TrimSpace(lines[i]), 0, 0, canvas.Left, canvas.Top, 0, 0)
+		txt := canvas.NewTextBox(face, strings.TrimSpace(lines[i]), 0, 0, canvas.Left, canvas.Top, nil)
 		b := txt.Bounds()
 		ctx.DrawText(0, y, txt)
 		y += b.Y0 - b.Y1

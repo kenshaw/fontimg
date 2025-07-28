@@ -57,7 +57,7 @@ func TestRasterize(t *testing.T) {
 			if err := os.WriteFile(base+".png", buf, 0o644); err != nil {
 				t.Fatalf("expected no error, got: %v", err)
 			}
-			if bytes.Compare(test.exp, buf) != 0 {
+			if !bytes.Equal(test.exp, buf) {
 				t.Errorf("expected %s to match rasterized image", test.golden)
 			}
 		})
