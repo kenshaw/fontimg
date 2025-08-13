@@ -5,7 +5,7 @@ go 1.24.1
 toolchain go1.24.2
 
 require (
-	github.com/tdewolff/canvas v0.0.0-20250723191753-6cf674f0756a
+	github.com/tdewolff/canvas v0.0.0-20250728095813-50d4cb1eee71
 	github.com/tdewolff/font v0.0.0-20250724150151-83cb1696c2bd
 )
 
@@ -24,11 +24,11 @@ require (
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef // indirect
 	github.com/srwiley/scanx v0.0.0-20190309010443-e94503791388 // indirect
-	github.com/tdewolff/minify/v2 v2.23.10 // indirect
-	github.com/tdewolff/parse/v2 v2.8.1 // indirect
-	golang.org/x/image v0.29.0 // indirect
-	golang.org/x/net v0.42.0 // indirect
-	golang.org/x/text v0.27.0 // indirect
+	github.com/tdewolff/minify/v2 v2.23.11 // indirect
+	github.com/tdewolff/parse/v2 v2.8.2-0.20250806174018-50048bb39781 // indirect
+	golang.org/x/image v0.30.0 // indirect
+	golang.org/x/net v0.43.0 // indirect
+	golang.org/x/text v0.28.0 // indirect
 	modernc.org/knuth v0.5.5 // indirect
 	modernc.org/token v1.1.0 // indirect
 	star-tex.org/x/tex v0.7.1 // indirect
